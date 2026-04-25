@@ -7,7 +7,10 @@ export default function Movies() {
     <div>
       <ul className="list-group">
         {data?.map((m) => (
-          <li className="list-group-item bg-dark text-light border-secondary">
+          <li
+            key={m._id}
+            className="list-group-item bg-dark text-light border-secondary"
+          >
             {m.title}
           </li>
         ))}

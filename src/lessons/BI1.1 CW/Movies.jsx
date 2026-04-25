@@ -2,7 +2,6 @@ import useFetch from "../../useFetch";
 import MoviesTitle from "./MoviesTitle";
 export default function Movies() {
   const { data, loading, error } = useFetch("http://localhost:3000/movies");
-  console.log(data);
 
   return (
     <div>

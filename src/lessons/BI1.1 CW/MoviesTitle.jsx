@@ -3,7 +3,6 @@ export default function MoviesTitle({ title }) {
   const { data, loading, error } = useFetch(
     `http://localhost:3000/movies/${title}`,
   );
-  console.log(data);
 
   return data ? (
     <div>

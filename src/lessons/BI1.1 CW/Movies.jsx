@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import useFetch from "../../useFetch";
 import MoviesTitle from "./MoviesTitle";
 export default function Movies() {
@@ -16,6 +17,9 @@ export default function Movies() {
         ))}
       </ul>
       <MoviesTitle title={"Gully Boy"} />
+      <Link to="/movies/submit" className="btn btn-primary mt-4">
+        Add New Movie
+      </Link>
     </div>
   );
 }

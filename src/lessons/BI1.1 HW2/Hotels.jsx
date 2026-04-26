@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import useFetch from "../../useFetch";
 import HotelName from "./HotelName";
 
@@ -21,6 +22,9 @@ export default function Hotels() {
         ))}
       </ul>
       <HotelName name={"New Hotel"} />
+      <Link to="/hotels/submit" className="btn btn-primary mt-4">
+        Add New Hotel
+      </Link>
     </div>
   );
 }

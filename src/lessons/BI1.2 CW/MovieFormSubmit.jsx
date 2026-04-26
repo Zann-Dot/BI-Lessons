@@ -25,9 +25,9 @@ export default function MovieFormSubmit() {
     const data = new FormData(e.target);
     const title = data.get("title");
     const releaseYear = parseInt(data.get("releaseYear"));
-    const genre = data.get("genre").split(" ");
+    const genre = data.get("genre").split(",");
     const director = data.get("director");
-    const actor = data.get("actor").split(" ");
+    const actor = data.get("actor").split(",");
     const language = data.get("language");
     const country = data.get("country");
     const rating = parseFloat(data.get("rating"));

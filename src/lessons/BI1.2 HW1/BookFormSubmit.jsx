@@ -26,7 +26,7 @@ export default function BookFormSubmit() {
     const title = data.get("title");
     const author = data.get("author");
     const publishedYear = parseInt(data.get("publishedYear"));
-    const genre = data.get("genre").split(" ");
+    const genre = data.get("genre").split(",");
     const language = data.get("language");
     const country = data.get("country");
     const rating = parseFloat(data.get("rating"));

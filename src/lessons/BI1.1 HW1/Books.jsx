@@ -1,6 +1,7 @@
 import useFetch from "../../useFetch";
 import BookTitle from "./BookTitle";
 import BookAuthor from "./BookAuthor";
+import { Link } from "react-router";
 
 export default function Books() {
   const { data, loading, error } = useFetch("http://localhost:3000/books");
@@ -22,6 +23,10 @@ export default function Books() {
       </ul>
       <BookTitle title={"Shoe Dog"} />
       <BookAuthor author={"Harper Lee"} />
+
+      <Link to="/books/submit" className="btn btn-primary mt-4">
+        Add New Book
+      </Link>
     </div>
   );
 }

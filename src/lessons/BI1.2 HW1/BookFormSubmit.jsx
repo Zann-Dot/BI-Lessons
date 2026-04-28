@@ -1,8 +1,9 @@
+import { useState } from "react";
 import useFetch from "../../useFetch";
 
 export default function BookFormSubmit() {
   const { data, loading, error } = useFetch("http://localhost:3000/books");
-
+  const [successMsg, setSuccessMsg] = useState("");
   const addBookDetails = async (bookDetails) => {
     try {
       const response = await fetch("http://localhost:3000/books", {
@@ -61,8 +62,31 @@ export default function BookFormSubmit() {
       addBookDetails(bookDetails);
     }
   };
+
+  const handleDelete = async (bookId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/books/${bookId}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        const err = await response.json().then((res) => res.error);
+        throw new Error(err);
+      }
+
+      const data = await response.json();
+
+      if (data) {
+        setSuccessMsg(data.message);
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <div>
+    <div className="container">
       <h1 className="display-3 mb-4">Add New Books</h1>
       <form onSubmit={handleSubmit} className="d-grid">
         <label className="form-label fs-5 text-white-50">Book Title :</label>
@@ -169,14 +193,21 @@ export default function BookFormSubmit() {
       </form>
 
       <div className="container my-5">
+        <p className="text-success text-center fs-4">{successMsg}</p>
         <h3 className="display-5 text-center mb-4">Books List</h3>
         <ul className="list-group">
           {data?.map((b) => (
             <li
               key={b._id}
-              className="list-group-item bg-dark text-white-50 border-secondary"
+              className="list-group-item bg-dark text-white-50 border-secondary d-flex justify-content-between align-items-start"
             >
               {b.title}
+              <button
+                className="btn btn-primary"
+                onClick={() => handleDelete(b._id)}
+              >
+                Delete
+              </button>
             </li>
           ))}
         </ul>

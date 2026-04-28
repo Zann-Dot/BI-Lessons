@@ -1,8 +1,11 @@
+import { useEffect, useState } from "react";
 import useFetch from "../../useFetch";
 
 export default function MovieFormSubmit() {
   const { data, loading, error } = useFetch("http://localhost:3000/movies");
+  const [successMsg, setSuccessMsg] = useState("");
 
+  useEffect(() => {}, [data]);
   const addMovieData = async (movieData) => {
     try {
       const response = await fetch("http://localhost:3000/movies", {
@@ -67,6 +70,28 @@ export default function MovieFormSubmit() {
       addMovieData(movieData);
     }
   };
+
+  const handleDelete = async (movieId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/movies/${movieId}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        const err = await response.json().then((res) => res.error);
+        throw new Error(err);
+      }
+
+      const data = await response.json();
+      if (data) {
+        setSuccessMsg(data?.message);
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
       <h1 className="display-3 mb-4">Add New Movie</h1>
@@ -200,14 +225,21 @@ export default function MovieFormSubmit() {
       </form>
 
       <div className="container my-5">
+        <p className="text-success text-center fs-4">{successMsg}</p>
         <h3 className="display-5 text-center mb-4">Movies List</h3>
         <ul className="list-group">
           {data?.map((m) => (
             <li
               key={m._id}
-              className="list-group-item bg-dark text-white-50 border-secondary"
+              className="list-group-item bg-dark text-white-50 border-secondary d-flex justify-content-between align-items-start"
             >
               {m.title}
+              <button
+                className="btn btn-primary"
+                onClick={() => handleDelete(m._id)}
+              >
+                Delete
+              </button>
             </li>
           ))}
         </ul>
